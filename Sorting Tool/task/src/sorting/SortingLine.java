@@ -16,8 +16,15 @@ public class SortingLine implements SortingMethod {
             if (line.length() > maxLine.length()) {
                 maxLine = line;
                 totalMaxLine = 1;
-            } else if (line.length() == maxLine.length()) {
+            } else if (line.equals(maxLine)) {
                 totalMaxLine++;
+            } else if (line.length() == maxLine.length()) {
+                int rs = line.compareTo(maxLine);
+
+                if (rs > 0) {
+                    maxLine = line;
+                    totalMaxLine = 1;
+                }
             }
         }
         double percentages = ((double) totalMaxLine / totalLine) * 100;

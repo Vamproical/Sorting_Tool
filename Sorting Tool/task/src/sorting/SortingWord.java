@@ -10,17 +10,23 @@ public class SortingWord implements SortingMethod {
         int totalWord = 0;
         String maxWord = "";
         int totalMaxWord = 1;
-        while (scanner.hasNextLine()) {
-            String[] words = scanner.nextLine().split("\\s+");
-            totalWord += words.length;
-            for (String str : words) {
-                if (str.length() > maxWord.length()) {
-                    maxWord = str;
+        while (scanner.hasNext()) {
+            String word = scanner.next();
+
+            if (word.length() > maxWord.length()) {
+                maxWord = word;
+                totalMaxWord = 1;
+            } else if (word.equals(maxWord)) {
+                totalMaxWord++;
+            } else if (word.length() == maxWord.length()) {
+                int rs = word.compareTo(maxWord);
+
+                if (rs > 0) {
+                    maxWord = word;
                     totalMaxWord = 1;
-                } else if (str.compareTo(maxWord) == 0) {
-                    totalMaxWord++;
                 }
             }
+            ++totalWord;
         }
         double percentages = ((double) totalMaxWord / totalWord) * 100;
         System.out.printf("Total words: %d.\n", totalWord);

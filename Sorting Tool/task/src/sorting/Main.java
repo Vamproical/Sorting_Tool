@@ -1,16 +1,20 @@
 package sorting;
 
-import java.util.*;
-
 public class Main {
     public static void main(final String[] args) {
-        Scanner scanner = new Scanner(System.in);
         String dataType = "word";
-        if (args.length >= 1) {
-            if (args[1].equals("long")) {
+        for (String str: args) {
+            if (str.equals("-sortIntegers")) {
+                dataType = "integers";
+                break;
+            }
+            if (str.equals("long")) {
                 dataType = "long";
-            } else if (args[1].equals("line")) {
+                break;
+            }
+            else if (str.equals("line")) {
                 dataType = "line";
+                break;
             }
         }
         SortingTool tool = new SortingTool();
@@ -20,6 +24,9 @@ public class Main {
                 break;
             case "line":
                 tool.setMethod(new SortingLine());
+                break;
+            case "integers":
+                tool.setMethod(new SortingIntegers());
                 break;
             default:
                 tool.setMethod(new SortingWord());
