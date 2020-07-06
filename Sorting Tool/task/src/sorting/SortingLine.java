@@ -9,32 +9,41 @@ public class SortingLine implements SortingMethod {
     private final Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void sortByNatural() {
+    public void sortByNatural(String inputFile, String outputFile) {
         List<String> sortArray = new ArrayList<>();
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            sortArray.add(line);
+        if (!inputFile.equals("")) {
+            sortArray = ReadFile.readLineFromFile(inputFile);
+        } else {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                sortArray.add(line);
+            }
         }
         Collections.sort(sortArray);
-        System.out.printf("Total numbers: %d.\n", sortArray.size());
-        System.out.println("Sorted data: ");
-        for (String i : sortArray) {
-            System.out.println(i);
+        if (!outputFile.equals("")) {
+            WriteFile.writeWordAndLineToFile(outputFile, sortArray);
+        } else {
+            System.out.printf("Total numbers: %d.\n", sortArray.size());
+            System.out.println("Sorted data: ");
+            for (String i : sortArray) {
+                System.out.println(i);
+            }
         }
     }
 
     @Override
-    public void sortByCount() {
+    public void sortByCount(String inputFile, String outputFile) {
         List<String> sortedDataEntries = new ArrayList<>();
-        int entryNumber = 0;
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            sortedDataEntries.add(line);
-            ++entryNumber;
+        if (!inputFile.equals("")) {
+            sortedDataEntries = ReadFile.readLineFromFile(inputFile);
+        } else {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                sortedDataEntries.add(line);
+            }
         }
-
-        ArrayList<String> temp = new ArrayList<>();
-        ArrayList<EntryWordAndLine> sorted = new ArrayList<>();
+        List<String> temp = new ArrayList<>();
+        List<EntryWordAndLine> sorted = new ArrayList<>();
         Collections.sort(sortedDataEntries);
         for (String l : sortedDataEntries) {
             if (!temp.contains(l)) {
@@ -43,13 +52,14 @@ public class SortingLine implements SortingMethod {
             }
             temp.add(l);
         }
-        System.out.println("Total numbers: " + entryNumber + ".");
-
         Collections.sort(sorted);
-
-        for (EntryWordAndLine n : sorted) {
-            System.out.printf("%s: %d time(s), %.0f%%\n", n.getWord(), n.getFreq(), (((double) n.getFreq() / entryNumber) * 100));
-
+        if (!outputFile.equals("")) {
+            WriteFile.writeWordAndLineToFileByCount(outputFile, sorted, sortedDataEntries.size());
+        } else {
+            System.out.println("Total numbers: " + sortedDataEntries.size() + ".");
+            for (EntryWordAndLine n : sorted) {
+                System.out.printf("%s: %d time(s), %.0f%%\n", n.getWord(), n.getFreq(), (((double) n.getFreq() / sortedDataEntries.size()) * 100));
+            }
         }
     }
 }

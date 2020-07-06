@@ -1,7 +1,7 @@
 package sorting;
 
 public interface SortingMethod {
-    void sortByNatural();
+    void sortByNatural(String inputFile, String outputFile);
 
-    void sortByCount();
+    void sortByCount(String inputFile, String outputFile);
 }
