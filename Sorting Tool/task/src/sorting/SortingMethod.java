@@ -1,5 +1,7 @@
 package sorting;
 
 public interface SortingMethod {
-    void sort();
+    void sortByNatural();
+
+    void sortByCount();
 }

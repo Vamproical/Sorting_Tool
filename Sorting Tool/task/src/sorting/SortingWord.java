@@ -1,35 +1,57 @@
 package sorting;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class SortingWord implements SortingMethod {
     private final Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void sort() {
-        int totalWord = 0;
-        String maxWord = "";
-        int totalMaxWord = 1;
-        while (scanner.hasNext()) {
-            String word = scanner.next();
-
-            if (word.length() > maxWord.length()) {
-                maxWord = word;
-                totalMaxWord = 1;
-            } else if (word.equals(maxWord)) {
-                totalMaxWord++;
-            } else if (word.length() == maxWord.length()) {
-                int rs = word.compareTo(maxWord);
-
-                if (rs > 0) {
-                    maxWord = word;
-                    totalMaxWord = 1;
-                }
-            }
-            ++totalWord;
+    public void sortByNatural() {
+        List<String> sortArray = new ArrayList<>();
+        while (scanner.hasNextLine()) {
+            String[] line = scanner.nextLine().split("\\s+");
+            Collections.addAll(sortArray, line);
         }
-        double percentages = ((double) totalMaxWord / totalWord) * 100;
-        System.out.printf("Total words: %d.\n", totalWord);
-        System.out.printf("The greatest number: %s (%d time(s), %.0f%%).\n", maxWord, totalMaxWord, percentages);
+        Collections.sort(sortArray);
+        System.out.printf("Total numbers: %d.\n", sortArray.size());
+        System.out.print("Sorted data: ");
+        for (String i : sortArray) {
+            System.out.print(i + " ");
+        }
+    }
+
+    @Override
+    public void sortByCount() {
+        List<String> sortedDataEntries = new ArrayList<>();
+        int entryNumber = 0;
+        while (scanner.hasNextLine()) {
+            String[] line = scanner.nextLine().split("\\s+");
+            for (String str : line) {
+                sortedDataEntries.add(str);
+                ++entryNumber;
+            }
+        }
+
+        ArrayList<String> temp = new ArrayList<>();
+        ArrayList<EntryWordAndLine> sorted = new ArrayList<>();
+        Collections.sort(sortedDataEntries);
+        for (String l : sortedDataEntries) {
+            if (!temp.contains(l)) {
+                long occurrences = Collections.frequency(sortedDataEntries, l);
+                sorted.add(new EntryWordAndLine(l, occurrences));
+            }
+            temp.add(l);
+        }
+        System.out.println("Total numbers: " + entryNumber + ".");
+
+        Collections.sort(sorted);
+
+        for (EntryWordAndLine n : sorted) {
+            System.out.printf("%s: %d time(s), %.0f%%\n", n.getWord(), n.getFreq(), (((double) n.getFreq() / entryNumber) * 100));
+
+        }
     }
 }
