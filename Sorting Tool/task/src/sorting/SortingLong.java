@@ -14,7 +14,13 @@ public class SortingLong implements SortingMethod {
         while (scanner.hasNextLine()) {
             String[] line = scanner.nextLine().split("\\s+");
             for (String str : line) {
-                sortArray.add(Long.parseLong(str));
+                long add;
+                try {
+                    add = Long.parseLong(str);
+                    sortArray.add(add);
+                } catch (NumberFormatException e) {
+                    System.out.println(str + " isn't a valid parameter. It's skipped.\n");
+                }
             }
         }
         Collections.sort(sortArray);
@@ -32,9 +38,14 @@ public class SortingLong implements SortingMethod {
         while (scanner.hasNextLine()) {
             String[] line = scanner.nextLine().split("\\s+");
             for (String str : line) {
-                Long forAdd = Long.parseLong(str);
-                sortedDataEntries.add(forAdd);
-                ++entryNumber;
+                long add;
+                try {
+                    add = Long.parseLong(str);
+                    sortedDataEntries.add(add);
+                    ++entryNumber;
+                } catch (NumberFormatException e) {
+                    System.out.println(str + " isn't a valid parameter. It's skipped.\n");
+                }
             }
         }
 
